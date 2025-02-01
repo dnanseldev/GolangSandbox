@@ -1,14 +1,22 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"laboratory/internal/concurrency_examples"
+)
 
 func main() {
-	// Create a new channel
-	ch := make(chan int, 1)
+	//concurrency_examples.ExChannel()
 
-	// Send a value to the channel
-	ch <- 42
+	ch := make(chan int)
+	go concurrency_examples.TwoTreeFourTimes(2, ch)
+	fmt.Println("It passed here")
 
-	// Receive the value from the channel
+	a, b := <-ch, <-ch
+	fmt.Println(a, b)
+	fmt.Println("It stoped here")
+
+	fmt.Println(<-ch)
+	fmt.Println("It should lock")
 	fmt.Println(<-ch)
 }
